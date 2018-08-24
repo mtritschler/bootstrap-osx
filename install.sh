@@ -32,11 +32,10 @@ function brew_install_devtools () {
 }
 
 function print_usage() {
-  echo "This script bootstraps a new machine with SSH keys and some elementary packages"
-  echo "Usage:\n./install.sh [OPTIONS]\n"
-  echo "Options:"
-  echo "\t--devtools\tInstalls Java, Scala, build tools and IntelliJ"
-
+  printf "This script bootstraps a new machine with SSH keys and some elementary packages\n"
+  printf '\nUsage:\n\tinstall.sh [OPTIONS]\n'
+  printf '\nOptions:\n'
+  printf '\t--devtools\tInstalls Java, Scala, build tools and IntelliJ\n'
 }
 
 INSTALL_DEVTOOLS=NO
@@ -44,13 +43,17 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
+    --help)
+    print_usage
+    exit 0
+    ;;
     --devtools)
     INSTALL_DEVTOOLS=YES
     shift
     ;;
     *)    # unknown option
-    POSITIONAL+=("$1") # save it in an array for later
-    shift # past argument
+    print_usage
+    exit 0
     ;;
   esac
 done
@@ -73,5 +76,5 @@ else
     brew_install_devtools;
   fi
 
-  echo "You're all set to go...";
+  echo "You are all set to go...";
 fi
