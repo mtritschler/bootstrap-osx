@@ -43,7 +43,7 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
-    --help)
+    -h|--help)
     print_usage
     exit 0
     ;;
