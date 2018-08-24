@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BASEDIR=$(dirname $0)
+
 if [ ! command -v brew &>/dev/null ]; then
   echo "Please install Homebrew first (https://brew.sh)"
   exit 1
@@ -21,6 +23,17 @@ function brew_tap_casks () {
 
 function brew_install_base () {
   brew install bash-completion jq
+  if [ ! -f ~/.bash_profile ]; then
+    touch ~/.bash_profile;
+  fi
+
+  local MARK_COMPLETION="# snippets/bash-completion";
+  if ! grep -q "$MARK_COMPLETION" ~/.bash_profile; then
+    echo "Adding bash-completion to ~/.bash_profile"
+    echo $MARK_COMPLETION >> ~/.bash_profile;
+    cat "$BASEDIR/snippets/completion" >> ~/.bash_profile;
+  fi
+
   brew cask install iterm2
   brew cask install slack firefox atom 1password
 }
